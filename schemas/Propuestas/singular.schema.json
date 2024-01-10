@@ -1,0 +1,154 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "./schemas/Propuestas/singular.schema.json",
+    "title": "Elementos singulares",
+    "description": "Propuesta de elementos singulares",
+    "type": "object",
+    "properties": {
+        "parque": {
+            "$href": "./schemas/parque.schema.json"
+        },
+        "acción": {
+            "$href": "#defs/acciones"
+        },
+        "motivación": {
+            "$href": "#defs/motivaciones"
+        },
+        "capacidad": {
+            "description": "Capacidad mínima requerida en MVA",
+            "type": "number",
+            "minimun": 0.0
+        },
+        "fecha": {
+            "description": "Año para el que se detecta la necesidad",
+            "type": "integer",
+            "minimun": 2025
+        },
+        "descripción": {
+            "descripción": "Descripción de la necesidad o comentarios adicionales a la solicitud de la subestación",
+            "type": "string"
+        },
+        "código_acceso": {
+            "descripción": "Código de acceso y conexión (si se dispone de el por tratarse de una ampliación tramitada en ejercicios anteriores)",
+            "type": "string"
+        }
+    },
+    "required": ["parque", "acción", "motivación", "categoría", "tipo"],
+    "dependentSchemas": {
+        "tipo": {
+            "oneOf":[ 
+                {
+                    "properties": {
+                        "motivación": {"enum": ["Control"]},
+                        "tipo": {"$href": "#defs/tipos_control"},
+                        "dependentSchemas": {
+                            "motivación": {
+                                "oneOf": [ 
+                                    {
+                                        "properties": {
+                                            "tipo": {"enum": ["Control de flujo"]},
+                                            "subtipo": {"$href": "#defs/control_flujo"}
+                                        }
+                                    },
+                                    {
+                                        "properties": {
+                                            "tipo": {"enum": ["Control de tensión"]},
+                                            "subtipo": {"$href": "#defs/control_tensión"}
+                                        }
+                                    },
+                                    {
+                                        "properties": {
+                                            "tipo": {"enum": ["Otros controles"]},
+                                            "subtipo": {"$href": "#defs/control_otros"}
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                },
+                {
+                    "properties": {
+                        "categoría": {"enum": ["Plenamente integrados en red"]},
+                        "tipo": {"$href": "#defs/intedrados_red"},
+                        "dependentSchemas": {
+                            "tipo": {
+                                "oneOf": [ 
+                                    {
+                                        "properties": {
+                                            "tipo": {"enum": ["Plenamente integrados en red"]},
+                                            "subtipo": {"$href": "#defs/intedrados_red"}
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                }
+            ]
+        }
+    },
+    "$defs": {        
+        "acciones": {
+            "description": "Lista de acciones para ampliaciones de subestación",
+            "type": "string",
+            "enum": [
+                "Alta",
+                "Baja",
+                "Cambio de titularidad",
+                "Cambio de capacidad"
+            ]            
+        },
+        "motivaciones": {
+            "description": "Lista de motivaciones para ampliaciones de subestación",
+            "type": "string",
+            "enum": [
+                "Control",
+                "Plenamente integrados en red"
+            ]
+        },
+        "tipos_control": {
+            "description": "Lista de tipos de control",
+            "type": "string",
+            "enum": [
+                "Control de flujo",
+                "Control de tensión",
+                "Otros controles"
+            ]
+        },
+        "controles_flujo":{
+            "description": "Lista de tipos de control flujo",
+            "type": "string",
+            "enum": [
+                "FACTS",
+                "Reactancia serie",
+                "Transformador desfasador",
+                "Otros controles de flujo"                
+            ]
+        },
+        "controles_tensión":{
+            "description": "Lista de tipos de control tensión",
+            "type": "string",
+            "enum": [
+                "Reactancia",
+                "Condensador",
+                "STATCOM",
+                "Otros controles de tensión"  
+            ]
+        },
+        "controles_otros":{
+            "description": "Lista de tipos de control otros",
+            "type": "string",
+            "enum": [
+                "Otros controles"
+            ]
+        },
+        "integrados_red": {
+            "description": "Lista de elementos singulares plenamente integrados en red",
+            "type": "string",
+            "enum": [
+                "Otros elementos"
+            ]
+        }
+    }
+}

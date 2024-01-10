@@ -1,0 +1,58 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "./schemas/Propuestas/propuesta.schema.json",
+    "title": "Propuestas",
+    "description": "Una propuesta para la planificación 2025",
+    "type": "object",
+    "properties": {
+        "uuid": {
+            "description": "Identificador único para una propuesta",
+            "type": "string"
+        },
+        "titulo": {
+            "description": "Título de la propuesta",
+            "type": "string"
+        },
+        "descripción": {
+            "description": "Descripción de la propuesta",
+            "type": "string"
+        },
+        "subestaciones": {
+            "description": "Lista de propuestas de subestación",
+            "type": "array",
+            "items": {
+                "$ref": "subestacion.schema.json"
+            },
+            "minItems": 0,
+            "uniqueItems": true
+        },
+        "mallados":{
+            "description": "Lista de propuestas de mallado",
+            "type": "array",
+            "items": {
+                "$ref": "mallado.schema.json"
+            },
+            "minItems": 0,
+            "uniqueItems": true
+        },
+        "ampliaciones":{
+            "description": "Lista de propuestas de ampliación de subestación",
+            "type": "array",
+            "items": {
+                "$ref": "ampliacion.schema.json"
+            },
+            "minItems": 0,
+            "uniqueItems": true
+        },
+        "singulares":{
+            "description": "Lista de propuestas de elementos de singulares",
+            "type": "array",
+            "items": {
+                "$ref": "singular.schema.json"
+            },
+            "minItems": 0,
+            "uniqueItems": true
+        }
+    }
+}
+    

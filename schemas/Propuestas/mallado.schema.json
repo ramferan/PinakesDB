@@ -1,0 +1,116 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "./schemas/Propuestas/mallado.schema.json",
+    "title": "Mallado de red",
+    "description": "Propuesta de mallado de red",
+    "type": "object",
+    "properties": {
+        "parque_inicio": {
+            "$href": "./schemas/parque.schema.json"
+        },
+        "parque_fin": {
+            "$href": "./schemas/parque.schema.json"
+        },
+        "acción": {
+            "$href": "#defs/acciones"
+        },
+        "motivación": {
+            "$href": "#defs/motivaciones"
+        },
+        "tipo": {
+            "$href": "#defs/tipos"
+        },
+        "longitud": {
+            "description": "Longitud del mallado en km",
+            "type": "number",
+            "minimun": 0.0
+        },
+        "capacidad": {
+            "description": "Capacidad mínima requerida en MVA",
+            "type": "number",
+            "minimun": 0.0
+        },
+        "fecha": {
+            "description": "Año para el que se detecta la necesidad",
+            "type": "integer",
+            "minimun": 2025
+        },
+        "descripción": {
+            "descripción": "Descripción de la necesidad o comentarios adicionales a la solicitud de la subestación",
+            "type": "string"
+        }
+    },
+    "required": ["parque_inicio", "parque_fin", "acción", "motivación", "tipo", "fecha"],
+    "dependentSchemas": {
+        "tipo": {
+            "oneOf":[ 
+                {
+                    "properties": {
+                        "tipo": {"enum": ["Cable subterráneo", "Linea aerea"]},
+                        "configuración": {"$href": "#defs/configuraciones_linea"}
+                    }
+                },
+                {
+                    "properties": {
+                        "tipo": {"enum": ["Transformador"]},
+                        "configuración": {"$href": "#defs/configuraciones_transformador"}
+                    }
+                }
+            ]
+        }
+    },
+    "$defs": {        
+        "acciones": {
+            "description": "Lista de acciones para mallado",
+            "type": "string",
+            "enum": [
+                "Alta",
+                "Baja",
+                "Cambio de capacidad",                
+                "Cambio de topología",
+                "Cambio de titularidad",
+                "Renovación total",
+                "Renovación parcial"
+            ]
+        },
+        "motivaciones": {
+            "description": "Lista de motivaciones para mallado",
+            "type": "string",
+            "enum": [
+                "Apoyo a la red de distribución",
+                "Integración de renovables",
+                "Nueva demanda",
+                "Nueva generación",
+                "Reducción de restricciones",
+                "Refuerzo de la Red de Transporte",
+                "Seguridad de suministro"
+            ]
+        },
+        "tipos": {
+            "description": "Lista de tipos de mallado",
+            "type": "string",
+            "enum": [
+                "Cable subterráneo",
+                "Linea aerea",
+                "Transformador"
+            ]
+        },
+        "configuraciones_linea": {
+            "description": "Lista de configuraciones de linea",
+            "type": "string",
+            "enum": [
+                "Doble circuito",
+                "Simple circuito",
+                "Otra configuración"
+            ]
+        },
+        "configuraciones_transformador": {
+            "description": "Lista de configuraciones de transformador",
+            "type": "string",
+            "enum": [
+                "Banco trifásico",
+                "Unidades monofásicas"
+            ]
+        }
+    }
+}

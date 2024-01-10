@@ -1,0 +1,331 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "./schemas/Propuestas/ampliacion.schema.json",
+    "title": "Ampliación de subestación",
+    "description": "Propuesta de ampliación de subestación",
+    "type": "object",
+    "properties": {
+        "parque": {
+            "$href": "./schemas/parque.schema.json"
+        },
+        "tensión_destino": {
+            "description": "Tensión de kV",
+            "type": "integer",
+            "minimun": 0
+        }, 
+        "acción": {
+            "$href": "#defs/acciones"
+        },
+        "motivación": {
+            "$href": "#defs/motivaciones"
+        },
+        "categoría": {
+            "$href": "#defs/categorías"
+        },
+        "capacidad": {
+            "description": "Capacidad mínima requerida en MVA",
+            "type": "number",
+            "minimun": 0.0
+        },
+        "fecha": {
+            "description": "Año para el que se detecta la necesidad",
+            "type": "integer",
+            "minimun": 2025
+        },
+        "descripción": {
+            "descripción": "Descripción de la necesidad o comentarios adicionales a la solicitud de la subestación",
+            "type": "string"
+        },
+        "código_acceso": {
+            "descripción": "Código de acceso y conexión (si se dispone de el por tratarse de una ampliación tramitada en ejercicios anteriores)",
+            "type": "string"
+        }
+    },
+    "required": ["parque", "acción", "motivación", "categoría", "tipo"],
+    "dependentSchemas": {
+        "categoría": {
+            "oneOf":[ 
+                {
+                    "properties": {
+                        "categoría": {"enum": ["Almacenamiento"]},
+                        "tipo": {"$href": "#defs/tipos_almacenamiento"},
+                        "dependentSchemas": {
+                            "tipo": {
+                                "oneOf": [ 
+                                    {
+                                        "properties": {
+                                            "tipo": {"enum": ["Almacenamiento eléctrico"]},
+                                            "subtipo": {"$href": "#defs/almacenamientos_eléctricos"}
+                                        }
+                                    },
+                                    {
+                                        "properties": {
+                                            "tipo": {"enum": ["Almacenamiento hidráulico"]},
+                                            "subtipo": {"$href": "#defs/almacenamientos_hidráulicos"}
+                                        }
+                                    },
+                                    {
+                                        "properties": {
+                                            "tipo": {"enum": ["Almacenamiento térmico"]},
+                                            "subtipo": {"$href": "#defs/almacenamientos_térmicos"}
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                },
+                {
+                    "properties": {
+                        "categoría": {"enum": ["Demanda"]},
+                        "tipo": {"$href": "#defs/tipos_demanda"},
+                        "dependentSchemas": {
+                            "tipo": {
+                                "oneOf": [ 
+                                    {
+                                        "properties": {
+                                            "tipo": {"enum": ["Residencial"]},
+                                            "subtipo": {"$href": "#defs/demanda_residencial"}
+                                        }
+                                    },
+                                    {
+                                        "properties": {
+                                            "tipo": {"enum": ["Industrial"]},
+                                            "subtipo": {"$href": "#defs/demanda_industrial"}
+                                        }
+                                    },
+                                    {
+                                        "properties": {
+                                            "tipo": {"enum": ["Servicios"]},
+                                            "subtipo": {"$href": "#defs/demanda_servicios"}
+                                        }
+                                    },
+                                    {
+                                        "properties": {
+                                            "tipo": {"enum": ["Electrificación de puertos"]},
+                                            "subtipo": {"$href": "#defs/demanda_puerto"}
+                                        }
+                                    },
+                                    {
+                                        "properties": {
+                                            "tipo": {"enum": ["Electrificación del transporte"]},
+                                            "subtipo": {"$href": "#defs/demanda_transporte"}
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                },
+                {
+                    "properties": {
+                        "categoría": {"enum": ["Generación"]},
+                        "tipo": {"$href": "#defs/tipos_generación"},
+                        "dependentSchemas": {
+                            "tipo": {
+                                "oneOf": [ 
+                                    {
+                                        "properties": {
+                                            "tipo": {"enum": ["Eólica"]},
+                                            "subtipo": {"$href": "#defs/generacion_eólica"}
+                                        }
+                                    },
+                                    {
+                                        "properties": {
+                                            "tipo": {"enum": ["Hidráulica"]},
+                                            "subtipo": {"$href": "#defs/generacion_hidráuilica"}
+                                        }
+                                    },
+                                    {
+                                        "properties": {
+                                            "tipo": {"enum": ["Solar"]},
+                                            "subtipo": {"$href": "#defs/generacion_solar"}
+                                        }
+                                    },
+                                    {
+                                        "properties": {
+                                            "tipo": {"enum": ["Biomasa"]},
+                                            "subtipo": {"$href": "#defs/generacion_biomasa"}
+                                        }
+                                    },
+                                    {
+                                        "properties": {
+                                            "tipo": {"enum": ["Otra generación"]},
+                                            "subtipo": {"$href": "#defs/generacion_otros"}
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                }
+            ]
+        }
+    },
+    "$defs": {        
+        "acciones": {
+            "description": "Lista de acciones para ampliaciones de subestación",
+            "type": "string",
+            "enum": [
+                "Alta",
+                "Baja",
+                "Cambio de titularidad",
+                "Cambio de capacidad"
+            ]            
+        },
+        "motivaciones": {
+            "description": "Lista de motivaciones para ampliaciones de subestación",
+            "type": "string",
+            "enum": [
+                "Alimentación a CPDs",
+                "Alimentación ferroviaria",
+                "Almacenamiento",
+                "Apoyo a distribución",
+                "Conexión de renovables",
+                "Desarrollos industriales",
+                "Desarrollos urbanísticos",
+                "Electrificación del transporte",
+                "Electrificación industrial",
+                "Otra generación",
+                "Otra demanda",
+                "Producción de hidrógeno",
+                "Reducción de restricciones"
+            ]
+        },
+        "categorías": {
+            "description": "Lista de categorías de ampliaciones de subestación",
+            "type": "string",
+            "enum": [
+                "Almacenamiento",
+                "Demanda",
+                "Generación"
+            ]
+        },
+        "tipos_almacenamiento": {
+            "description": "Lista de tipos de almacenamiento",
+            "type": "string",
+            "enum": [
+                "Almacenamiento eléctrico",
+                "Almacenamiento hidráulico",
+                "Almacenamiento térmico",
+                "Otro almacenamiento"
+            ]
+        },
+        "almacenamientos_eléctricos":{
+            "description": "Lista de tipos de almacenamiento eléctricos",
+            "type": "string",
+            "enum": [
+                "Batería"
+            ]
+        },
+        "almacenamientos_hidráulicos":{
+            "description": "Lista de tipos de almacenamiento hidráulico",
+            "type": "string",
+            "enum": [
+                "Almacenamiento hidráulico"
+            ]
+        },
+        "almacenamientos_térmicos":{
+            "description": "Lista de tipos de almacenamiento térmico",
+            "type": "string",
+            "enum": [
+                "Almacenamiento térmico"
+            ]
+        },
+        "tipos_demanda": {
+            "description": "Lista de tipos de demanda",
+            "type": "string",
+            "enum": [
+                "Residencial",
+                "Industrial",
+                "Servicios",
+                "Electrificación de puertos",
+                "Electrificación del transporte"
+            ]
+        },
+        "demanda_residencial": {
+            "description": "Lista de tipos de demanda residencial",
+            "type": "string",
+            "enum": [
+                "Residencial"
+            ]
+        },
+        "demanda_industrial": {
+            "description": "Lista de tipos de demanda industrial",
+            "type": "string",
+            "enum": [
+                "Industrial"
+            ]
+        },
+        "demanda_servicios": {
+            "description": "Lista de tipos de demanda servicios",
+            "type": "string",
+            "enum": [
+                "Servicios"
+            ]
+        },
+        "demanda_puerto": {
+            "description": "Lista de tipos de demanda puertos",
+            "type": "string",
+            "enum": [
+                "Electrificación de puertos"
+            ]
+        },
+        "demanda_transporte": {
+            "description": "Lista de tipos de demanda transporte",
+            "type": "string",
+            "enum": [
+                "Electrificación del transporte"
+            ]
+        },
+        "tipos_generación": {
+            "description": "Lista de tipos de generación",
+            "type": "string",
+            "enum": [
+                "Eólica",
+                "Solar",
+                "Hidráulica",
+                "Biomasa",
+                "Otra generación"
+            ]
+        },
+        "generación_eólica": {
+            "description": "Lista de tipos de generación eólica",
+            "type": "string",
+            "enum": [
+                "Marina",
+                "Terrestre"
+            ]
+        },
+        "generación_solar": {
+            "description": "Lista de tipos de generación solar",
+            "type": "string",
+            "enum": [
+                "Fotovoltaica",
+                "Térmica"
+            ]
+        },
+        "generación_hidráulica": {
+            "description": "Lista de tipos de generación Hidráulica",
+            "type": "string",
+            "enum": [
+                "Bombeo con embalse",
+                "Fluyente"
+            ]
+        },
+        "generación_biomasa": {
+            "description": "Lista de tipos de generación biomasa",
+            "type": "string",
+            "enum": [
+                "Biomasa"
+            ]
+        },
+        "generación_otros": {
+            "description": "Lista de tipos de generación otros",
+            "type": "string",
+            "enum": [
+                "Otra generación"
+            ]
+        }
+    }
+}

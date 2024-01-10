@@ -1,0 +1,134 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "./schemas/Propuestas/definitions.schema.json",
+    "title": "Ampliación de subestación",
+    "description": "Propuesta de ampliación de subestación",
+    "type": "object",
+    "$defs": {
+        "localizacion": {
+            "tpye": "object",
+            "properties": {
+                "comunidad": {
+                    "description": "Lista de comunidades",
+                    "type": "string",
+                    "enum": [
+                        "Andalucía", 
+                        "Aragón", 
+                        "Balears, Illes", 
+                        "Canarias", 
+                        "Cantabria", 
+                        "Castilla - La Mancha", 
+                        "Castilla y León", 
+                        "Cataluña", 
+                        "Ceuta", 
+                        "Comunidad de Madrid", 
+                        "Comunidad Foral de Navarra", 
+                        "Comunitat Valenciana", 
+                        "Extremadura", 
+                        "Galicia", 
+                        "Melilla", 
+                        "País Vasco", 
+                        "Principado de Asturias", 
+                        "Región de Murcia", 
+                        "Rioja, La"
+                    ]
+                },
+                "provincia": {
+                    "description": "Lista de provincias",
+                    "type": "string",
+                    "enum": [
+                        "Almería", 
+                        "Cádiz", 
+                        "Córdoba", 
+                        "Granada", 
+                        "Huelva", 
+                        "Jaén", 
+                        "Málaga", 
+                        "Sevilla", 
+                        "Huesca", 
+                        "Teruel", 
+                        "Zaragoza", 
+                        "Las Palmas", 
+                        "Santa Cruz de Tenerife", 
+                        "Cantabria", 
+                        "Albacete", 
+                        "Ciudad Real", 
+                        "Cuenca", 
+                        "Guadalajara", 
+                        "Toledo", 
+                        "Ávila", 
+                        "Burgos", 
+                        "León", 
+                        "Palencia", 
+                        "Salamanca", 
+                        "Segovia", 
+                        "Soria", 
+                        "Valladolid", 
+                        "Zamora", 
+                        "Barcelona", 
+                        "Girona", 
+                        "Lleida", 
+                        "Tarragona", 
+                        "Ceuta", 
+                        "Madrid", 
+                        "Navarra", 
+                        "Alicante", 
+                        "Castellón/Castelló", 
+                        "Valencia/València", 
+                        "Badajoz", 
+                        "Cáceres", 
+                        "Coruña, A", 
+                        "Lugo", 
+                        "Ourense", 
+                        "Pontevedra", 
+                        "Balears, Illes", 
+                        "Rioja, La", 
+                        "Melilla", 
+                        "Álava", 
+                        "Guipúzcoa", 
+                        "Vizcaya", 
+                        "Asturias", 
+                        "Murcia"
+                    ]
+                }
+            }
+        },        
+        "subestaciones": {
+            "type": "object",
+            "properties": {
+                "configuraciones": {
+                    "description": "Lista configuraciones de subestación",
+                    "type": "string",
+                    "enum": [
+                        "Interruptor y medio", 
+                        "Doble barra", 
+                        "Simple barra",
+                        "Anillo",
+                        "Sin determinar"
+                    ]
+                },
+                "tecnologias": {
+                    "description": "Lista tecnologías de subestación",
+                    "tpye": "string",
+                    "enum": [
+                        "AIS",
+                        "GIS", 
+                        "HIS"
+                    ]
+                },
+                "acciones": {
+                    "description": "Lista de acciones para subestación",
+                    "type": "string",
+                    "enum": [
+                        "Alta",
+                        "Baja",
+                        "Cambio de titularidad"
+                    ]
+                }
+            }
+        }
+    }
+}
+
+
+ 

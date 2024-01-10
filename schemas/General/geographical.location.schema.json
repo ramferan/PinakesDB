@@ -1,0 +1,24 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "./Schemas/General/geographical.location.schema.json",
+    "title": "Localización geográfica",
+    "description": "Localización geográfica",
+    "type": "object",
+    "properties": {
+        "latitud": {
+            "description": "Latitud (dentro del territorio español)",
+            "type": "number",
+            "minimun": 0.0,
+            "maximun": 0.0
+        },
+        "longitud": {
+            "description": "Longitud (dentro del territorio español)",
+            "type": "number",
+            "minimun": 0.0,
+            "maximun": 0.0
+        },
+        "provincia": {
+            "$href": "#definitions"
+        }
+    }
+}

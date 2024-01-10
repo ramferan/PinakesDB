@@ -1,0 +1,84 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "./schemas/Propuestas/subestacion.schema.json",
+    "title": "Subestación",
+    "description": "Propuesta de nueva subestación",
+    "type": "object",
+    "properties": {
+        "parque": {
+            "$href": "./schemas/parque.schema.json"
+        },
+        "acción": {
+            "description": "Acción de la subestación",
+            "$href": "#defs/acciones"
+        },
+        "motivación": {    
+            "$ref": "#defs/motivaciones" 
+        },
+        "tecnología": {            
+            "$ref": "#defs/tecnologias" 
+        },
+        "configuración": { 
+            "$ref": "#defs/configuraciones" 
+        },
+        "posiciones": {
+            "description": "Número de posiciones previstas",
+            "type": "integer",
+            "minimun": 1
+        },
+        "fecha": {
+            "description": "Año para el que se detecta la necesidad",
+            "type": "integer",
+            "minimun": 2025
+        },
+        "descripción": {
+            "descripción": "Descripción de la necesidad o comentarios adicionales a la solicitud de la subestación",
+            "type": "string"
+        }
+    },
+    "required": ["parque", "acción", "motivación", "fecha"],
+    "$defs": {
+        "acciones": {
+            "description": "Lista de acciones para subestación",
+            "type": "string",
+            "enum": [
+                "Alta",
+                "Baja",
+                "Cambio de titularidad"
+            ]
+        },
+        "motivaciones": {
+            "description": "Lista de motivaciones para subestación",
+            "type": "string",
+            "enum": [
+                "Alimentación ferroviaria",
+                "Apoyo a distribución",
+                "Integración de renovables",
+                "Nueva generación",
+                "Nueva demanda",
+                "Mixto",
+                "Refuerzo de la Red de Transporte"
+            ]
+        },
+        "configuraciones": {
+            "description": "Lista configuraciones de subestación",
+            "type": "string",
+            "enum": [
+                "Interruptor y medio", 
+                "Doble barra", 
+                "Simple barra",
+                "Anillo",
+                "Sin determinar"
+            ]
+        },
+        "tecnologias": {
+            "description": "Lista tecnologías de subestación",
+            "tpye": "string",
+            "enum": [
+                "AIS",
+                "GIS", 
+                "HIS"
+            ]
+        }
+    }
+}
